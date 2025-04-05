@@ -7,7 +7,7 @@
     <style>
         /* Background Image */
         body {
-            background: url('https://i.imgur.com/BIhzx8R.gif') no-repeat center center fixed; /* Your image */
+            background: url('https://i.imgur.com/BIhzx8R.gif') no-repeat center center fixed;
             background-size: cover;
             font-family: Arial, sans-serif;
             color: limegreen;
@@ -65,48 +65,81 @@
 <body>
     <div class="overlay"></div>
 
-    <h2>Decode TARAMAXI Alphabet</h2>
+    <h2>TARAMAXI Translator</h2>
     <textarea id="output" placeholder="Type here..."></textarea>
-    <div class="keyboard">
-        <button onclick="insertChar('A')">八</button>
-        <button onclick="insertChar('B')">几</button>
-        <button onclick="insertChar('C')">匚</button>
-        <button onclick="insertChar('D')">刀</button>
-        <button onclick="insertChar('E')">巨</button>
-        <button onclick="insertChar('F')">下</button>
-        <button onclick="insertChar('G')">厶</button>
-        <button onclick="insertChar('H')">卄</button>
-        <button onclick="insertChar('I')">工</button>
-        <button onclick="insertChar('J')">丨</button>
-        <button onclick="insertChar('K')">长</button>
-        <button onclick="insertChar('L')">ㄥ</button>
-        <button onclick="insertChar('M')">从</button>
-        <button onclick="insertChar('N')">冂</button>
-        <button onclick="insertChar('O')">回</button>
-        <button onclick="insertChar('P')">户</button>
-        <button onclick="insertChar('Q')">人</button>
-        <button onclick="insertChar('R')">尺</button>
-        <button onclick="insertChar('S')">丂</button>
-        <button onclick="insertChar('T')">丁</button>
-        <button onclick="insertChar('U')">山</button>
-        <button onclick="insertChar('V')">乂</button>
-        <button onclick="insertChar('W')">Ѡ</button>
-        <button onclick="insertChar('X')">爻</button>
-        <button onclick="insertChar('Y')">乚</button>
-        <button onclick="insertChar('Z')">乙</button>
-        <button onclick="insertChar(' ')">Space</button>
-        <button onclick="backspace()">Backspace</button> <!-- Added Backspace -->
-    </div>
+    
+    <div class="keyboard" id="keyboard"></div>
 
     <script>
+        // Taramaxi ↔ English Mapping
+        const taramaxiToEnglish = {
+            '八': 'A', '几': 'B', '匚': 'C', '刀': 'D', '巨': 'E', '下': 'F',
+            '厶': 'G', '卄': 'H', '工': 'I', '丨': 'J', '长': 'K', 'ㄥ': 'L',
+            '从': 'M', '冂': 'N', '回': 'O', '户': 'P', '人': 'Q', '尺': 'R',
+            '丂': 'S', '丁': 'T', '山': 'U', '乂': 'V', 'Ѡ': 'W', '爻': 'X',
+            '乚': 'Y', '乙': 'Z'
+        };
+
+        // Shuffle the Taramaxi letters randomly
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+        }
+
+        // Generate Keyboard with Randomized Order
+        function generateKeyboard() {
+            const keyboard = document.getElementById("keyboard");
+            keyboard.innerHTML = ""; // Clear previous buttons
+
+            let taramaxiKeys = Object.keys(taramaxiToEnglish); // Get all Taramaxi letters
+            shuffleArray(taramaxiKeys); // Randomize the order
+
+            // Create buttons based on randomized order
+            taramaxiKeys.forEach(char => {
+                let button = document.createElement("button");
+                button.textContent = char; // Show Taramaxi character
+                button.onclick = () => insertChar(char);
+                keyboard.appendChild(button);
+            });
+
+            // Add Space and Backspace buttons
+            let spaceBtn = document.createElement("button");
+            spaceBtn.textContent = "Space";
+            spaceBtn.onclick = () => insertChar(" ");
+            keyboard.appendChild(spaceBtn);
+
+            let backspaceBtn = document.createElement("button");
+            backspaceBtn.textContent = "⌫";
+            backspaceBtn.onclick = backspace;
+            keyboard.appendChild(backspaceBtn);
+        }
+
         function insertChar(char) {
-            document.getElementById("output").value += char;
+            let output = document.getElementById("output");
+            output.value += taramaxiToEnglish[char] || char; // Convert Taramaxi to English
         }
 
         function backspace() {
-        let output = document.getElementById("output");
-        output.value = output.value.slice(0, -1); // Remove last character
-    }
+            let output = document.getElementById("output");
+            output.value = output.value.slice(0, -1);
+        }
+
+        // Convert Physical Keyboard Input (Taramaxi → English)
+        document.getElementById("output").addEventListener("input", function (event) {
+            let text = this.value;
+            let convertedText = "";
+
+            for (let char of text) {
+                convertedText += taramaxiToEnglish[char] || char; // Convert Taramaxi to English
+            }
+
+            this.value = convertedText;
+        });
+
+        // Generate Keyboard on Load
+        generateKeyboard();
     </script>
 </body>
 </html>
