@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Keyboard</title>
+    <style>
+        /* Background Image */
+        body {
+            background: url('https://i.imgur.com/BIhzx8R.gif') no-repeat center center fixed; /* Your image */
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: limegreen;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Overlay Effect */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* 50% opacity black overlay */
+            z-index: -1;
+        }
+
+        /* Textarea Styling */
+        textarea {
+            width: 90%;
+            height: 150px;
+            font-size: 20px;
+            background: black;
+            color: limegreen;
+            border: 2px solid limegreen;
+            padding: 10px;
+        }
+
+        /* Keyboard Buttons */
+        .keyboard {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 600px;
+            margin: 20px auto;
+            justify-content: center;
+        }
+
+        button {
+            font-size: 18px;
+            margin: 5px;
+            padding: 10px 15px;
+            background: black;
+            color: limegreen;
+            border: 2px solid limegreen;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: limegreen;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <h2>Decode TARAMAXI Alphabet</h2>
+    <textarea id="output" placeholder="Type here..."></textarea>
+    <div class="keyboard">
+        <button onclick="insertChar('A')">八</button>
+        <button onclick="insertChar('B')">几</button>
+        <button onclick="insertChar('C')">匚</button>
+        <button onclick="insertChar('D')">刀</button>
+        <button onclick="insertChar('E')">巨</button>
+        <button onclick="insertChar('F')">下</button>
+        <button onclick="insertChar('G')">厶</button>
+        <button onclick="insertChar('H')">卄</button>
+        <button onclick="insertChar('I')">工</button>
+        <button onclick="insertChar('J')">丨</button>
+        <button onclick="insertChar('K')">长</button>
+        <button onclick="insertChar('L')">ㄥ</button>
+        <button onclick="insertChar('M')">从</button>
+        <button onclick="insertChar('N')">冂</button>
+        <button onclick="insertChar('O')">回</button>
+        <button onclick="insertChar('P')">户</button>
+        <button onclick="insertChar('Q')">人</button>
+        <button onclick="insertChar('R')">尺</button>
+        <button onclick="insertChar('S')">丂</button>
+        <button onclick="insertChar('T')">丁</button>
+        <button onclick="insertChar('U')">山</button>
+        <button onclick="insertChar('V')">乂</button>
+        <button onclick="insertChar('W')">Ѡ</button>
+        <button onclick="insertChar('X')">爻</button>
+        <button onclick="insertChar('Y')">乚</button>
+        <button onclick="insertChar('Z')">乙</button>
+        <button onclick="insertChar(' ')">Space</button>
+        <button onclick="backspace()">Backspace</button> <!-- Added Backspace -->
+    </div>
+
+    <script>
+        function insertChar(char) {
+            document.getElementById("output").value += char;
+        }
+
+        function backspace() {
+        let output = document.getElementById("output");
+        output.value = output.value.slice(0, -1); // Remove last character
+    }
+    </script>
+</body>
+</html>
